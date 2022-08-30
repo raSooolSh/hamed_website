@@ -1,6 +1,7 @@
-@extends('layouts.front.master')
+@extends('front.layouts.master')
+@section('title', 'صفحه اصلی')
 @section('content')
-    @include('layouts.front.nav-sticky')
+    @include('front.section.nav-sticky')
     <section id="header">
         <div class="container">
 
@@ -9,12 +10,10 @@
                     <a class="navbar-brand" href="#">Cryptologi.ir</a>
 
 
-                    <div class="ms-auto">
-                        <a href="" class="btn btn-info text-light">ورود <i class="bi bi-box-arrow-in-right"></i></a>
-                        <a href="" class="btn btn-success">عضویت <i class="bi bi-person-plus"></i></a>
-                    </div>
+                    @include('front.section.userDropdown')
 
-                    <button class="navbar-toggler ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#nav_offcanvas">
+                    <button class="navbar-toggler ms-2" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#nav_offcanvas">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 </div>
@@ -105,5 +104,3 @@
         });
     </script>
 @endsection
-
-

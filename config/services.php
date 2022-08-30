@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'qasedak'=>[
+        'key'=>env('QASEDAK_API_KEY'),
+        'number'=>env('QASEDAK_SERVICE_NUMBER'),
+    ]
+
 ];

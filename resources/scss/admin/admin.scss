@@ -1,0 +1,117 @@
+
+// font awsome
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css";
+// Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
+@import "variables.scss";
+
+// Import Bootstrap
+@import "../../vendor/bootstrap/scss/bootstrap.scss";
+
+// Import Custom SB Admin 2 Mixins and Components
+@import "mixins.scss";
+@import "global.scss";
+@import "utilities.scss";
+
+// Custom Components
+@import "dropdowns.scss";
+@import "navs.scss";
+@import "buttons.scss";
+@import "cards.scss";
+@import "charts.scss";
+@import "login.scss";
+@import "error.scss";
+@import "footer.scss";
+
+@font-face {
+  font-family: "Vazir";
+  src: url("../../fonts/Vazir.eot");
+  /* IE9 Compat Modes */
+  src: url("../../fonts/Vazir.eot?#iefix") format("embedded-opentype"),
+    url("../../fonts/Vazir.woff2") format("woff2"),
+    url("../../fonts/Vazir.woff") format("woff"),
+    url("../../fonts/Vazir.ttf") format("truetype");
+  /* Safari, Android, iOS */
+}
+
+body {
+  direction: rtl;
+  text-align: right !important;
+  font-family: "Vazir" !important;
+//   line-height: 1.6;
+}
+
+#registerCheckBox::before{
+    right: -1.5rem;
+}
+
+#registerCheckBox::after{
+    right: -1.5rem;
+}
+
+.modal{
+  & .img-profile{
+    width: 16rem;
+    height: 16rem;
+  }
+}
+
+// ------loading
+.lds-ellipsis {
+  display: inline-block;
+  position: absolute;
+  top:50vh;
+  left:50%;
+  width:100px;
+  height: 100px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+// -----/loading
