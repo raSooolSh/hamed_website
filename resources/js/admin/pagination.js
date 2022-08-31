@@ -1,5 +1,8 @@
 $(document).on("click", ".pagination a,.pagination button[type='submit']", function (e) {
     e.preventDefault();
+     // show loading
+     $("#pagination_data").html(`<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>`)
+
     //get url and make final url for ajax
     let url;
     if ($(this).attr("href")) {
@@ -13,8 +16,10 @@ $(document).on("click", ".pagination a,.pagination button[type='submit']", funct
         url = url.replace(/page=\d*/g, "page=" + $(this).prev().val());
     }
 
+    // add to history of browser
     window.history.pushState({}, null, url);
 
+    // get data with ajax
     $.get(url, function (data) {
         $("#pagination_data").html(data);
     });
@@ -23,12 +28,18 @@ $(document).on("click", ".pagination a,.pagination button[type='submit']", funct
 
 $(document).on("click", "#search_form button[type='submit']", function (e) {
     e.preventDefault();
+
+    // show loading
+    $("#pagination_data").html(`<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>`)
+
     //get url and make final url for ajax
     let url = window.location.origin + window.location.pathname + "?search=" +
         $("input[name='search']").val() ?? '';
 
+    // add to history of browser
     window.history.pushState({}, null, url);
 
+    // get data with ajax
     $.get(url, function (data) {
         $("#pagination_data").html(data);
     });

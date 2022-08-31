@@ -87,7 +87,9 @@ __webpack_require__(/*! ./pagination */ "./resources/js/admin/pagination.js");
 /***/ (() => {
 
 $(document).on("click", ".pagination a,.pagination button[type='submit']", function (e) {
-  e.preventDefault(); //get url and make final url for ajax
+  e.preventDefault(); // show loading
+
+  $("#pagination_data").html("<div class=\"lds-ellipsis\"><div></div><div></div><div></div><div></div></div>"); //get url and make final url for ajax
 
   var url;
 
@@ -102,9 +104,11 @@ $(document).on("click", ".pagination a,.pagination button[type='submit']", funct
     }
 
     url = url.replace(/page=\d*/g, "page=" + $(this).prev().val());
-  }
+  } // add to history of browser
 
-  window.history.pushState({}, null, url);
+
+  window.history.pushState({}, null, url); // get data with ajax
+
   $.get(url, function (data) {
     $("#pagination_data").html(data);
   });
@@ -113,10 +117,14 @@ $(document).on("click", ".pagination a,.pagination button[type='submit']", funct
 $(document).on("click", "#search_form button[type='submit']", function (e) {
   var _ref;
 
-  e.preventDefault(); //get url and make final url for ajax
+  e.preventDefault(); // show loading
 
-  var url = (_ref = window.location.origin + window.location.pathname + "?search=" + $("input[name='search']").val()) !== null && _ref !== void 0 ? _ref : '';
-  window.history.pushState({}, null, url);
+  $("#pagination_data").html("<div class=\"lds-ellipsis\"><div></div><div></div><div></div><div></div></div>"); //get url and make final url for ajax
+
+  var url = (_ref = window.location.origin + window.location.pathname + "?search=" + $("input[name='search']").val()) !== null && _ref !== void 0 ? _ref : ''; // add to history of browser
+
+  window.history.pushState({}, null, url); // get data with ajax
+
   $.get(url, function (data) {
     $("#pagination_data").html(data);
   });

@@ -27,17 +27,22 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item {{ bsIsActive(['admin.users.index','admin.user.moderators','admin.users.block']) }}">
+    <li class="nav-item {{ bsIsActive(['admin.users.index', 'admin.user.moderators', 'admin.users.block']) }}">
         <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-           aria-controls="collapseTwo">
+            aria-controls="collapseTwo">
             <i class="fas fa-fw fa-users"></i>
             <span>کاربران</span>
         </a>
-        <div id="collapseTwo" class="collapse {{ bsIsActive(['admin.users.index','admin.users.index.moderators','admin.users.index.blocked'],'show') }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTwo"
+            class="collapse {{ bsIsActive(['admin.users.index', 'admin.users.index.moderators', 'admin.users.index.blocked'], 'show') }}"
+            aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ bsIsActive('admin.users.index') }}" href="{{ route('admin.users.index') }}">همه کاربران</a>
-                <a class="collapse-item {{ bsIsActive('admin.users.index.moderators') }}" href="{{ route('admin.users.index.moderators') }}">کاربران ادمین</a>
-                <a class="collapse-item {{ bsIsActive('admin.users.index.blocked') }}" href="{{ route('admin.users.index.blocked') }}">کاربران بلاک شده</a>
+                <a class="collapse-item {{ bsIsActive('admin.users.index') }}"
+                    href="{{ route('admin.users.index') }}">همه کاربران</a>
+                <a class="collapse-item {{ bsIsActive('admin.users.index.moderators') }}"
+                    href="{{ route('admin.users.index.moderators') }}">کاربران ادمین</a>
+                <a class="collapse-item {{ bsIsActive('admin.users.index.blocked') }}"
+                    href="{{ route('admin.users.index.blocked') }}">کاربران بلاک شده</a>
             </div>
         </div>
     </li>
@@ -45,7 +50,7 @@
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-           aria-expanded="true" aria-controls="collapseUtilities">
+            aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
             <span> ابزار ها </span>
         </a>
@@ -70,8 +75,8 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-           aria-controls="collapsePages">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
             <span> صفحات </span>
         </a>

@@ -70,10 +70,10 @@ body {
 .lds-ellipsis {
   display: inline-block;
   position: absolute;
-  top:50vh;
-  left:50%;
-  width:100px;
-  height: 100px;
+  top:40%;
+  left:40%;
+  width:10%;
+  height:10%;
 }
 .lds-ellipsis div {
   position: absolute;
@@ -81,7 +81,7 @@ body {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: $orange;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis div:nth-child(1) {
