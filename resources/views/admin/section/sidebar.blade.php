@@ -1,19 +1,19 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion pr-0" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('homepage') }}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">WebProg.ir</div>
+        <div class="sidebar-brand-text mx-3">cryptologi.ir</div>
     </a>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item {{ bsIsActive('admin.dashboard') }}">
+        <a class="nav-link" href="{{ route('admin.dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span> داشبورد </span></a>
     </li>
@@ -27,17 +27,17 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+    <li class="nav-item {{ bsIsActive(['admin.users.index','admin.user.moderators','admin.users.block']) }}">
+        <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
            aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span> کامپونت ها </span>
+            <i class="fas fa-fw fa-users"></i>
+            <span>کاربران</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTwo" class="collapse {{ bsIsActive(['admin.users.index','admin.users.index.moderators','admin.users.index.blocked'],'show') }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header"> کامپونت سفارشی : </h6>
-                <a class="collapse-item" href="#">Buttons</a>
-                <a class="collapse-item" href="#">Cards</a>
+                <a class="collapse-item {{ bsIsActive('admin.users.index') }}" href="{{ route('admin.users.index') }}">همه کاربران</a>
+                <a class="collapse-item {{ bsIsActive('admin.users.index.moderators') }}" href="{{ route('admin.users.index.moderators') }}">کاربران ادمین</a>
+                <a class="collapse-item {{ bsIsActive('admin.users.index.blocked') }}" href="{{ route('admin.users.index.blocked') }}">کاربران بلاک شده</a>
             </div>
         </div>
     </li>

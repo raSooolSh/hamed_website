@@ -29,7 +29,7 @@
 
     {{-- users table --}}
     <div id='pagination_data'>
-        @include('admin.users.user-paginate', ['users' => $users])
+            @include('admin.users.user-paginate', ['users' => $users])
     </div>
 
     {{-- userModal --}}
@@ -59,13 +59,14 @@
                         @csrf
                         <input type="hidden" name="user_id" value="">
                         <div>
-                            <textarea class="form-control mb-3" rows="4" name='block_reason' placeholder="پیامی برای کاربر ثبت کنید تا از دلیل بلاک شدن خود مطلع شود"></textarea>
+                            <textarea class="form-control mb-3" rows="4" name='block_reason'
+                                placeholder="پیامی برای کاربر ثبت کنید تا از دلیل بلاک شدن خود مطلع شود"></textarea>
                         </div>
                     </form>
-                    <button type="button" class="btn btn-info" data-dismiss="modal">بیخیال</button>
-                    <button type="submit" class="btn btn-danger" disabled>حله، بلاک شه!</button>
+                    <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">بیخیال</button>
+                    <button type="submit" class="btn btn-sm btn-danger" disabled>حله، بلاک شه!</button>
                 </div>
-                    
+
             </div>
         </div>
     </div>
@@ -92,19 +93,17 @@
             }
         });
 
-        $(document).on('click','a[data-target="#user_modal"]',function(e){
-            let url="{{ route('admin.users.show',['user'=>':user']) }}";
-            url=url.replace(':user',$(e.currentTarget).attr('data-id'));
+        $(document).on('click', 'a[data-target="#user_modal"]', function(e) {
+            let url = "{{ route('admin.users.show', ['user' => ':user']) }}";
+            url = url.replace(':user', $(e.currentTarget).attr('data-id'));
             $.ajax({
                 type: "get",
                 url: url,
-                success: function (response) {
+                success: function(response) {
                     $('.lds-ellipsis').hide();
                     $('#user_modal .modal-content').html(response);
                 }
             });
         })
-
-
     </script>
 @endsection

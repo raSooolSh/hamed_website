@@ -55,6 +55,17 @@ body {
   }
 }
 
+#not_found{
+  position: relative;
+  & h4{
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: 10%;
+    font-weight: bold;
+  }
+}
+
 // ------loading
 .lds-ellipsis {
   display: inline-block;

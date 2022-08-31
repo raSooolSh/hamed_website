@@ -15,8 +15,8 @@ Route::get('/dashboard', function () {
 
 // ----- user routes
 Route::get('/users',[UserController::class,'index'])->name('users.index');
-Route::get('users/moderators',[UserController::class,'moderators'])->name('user.moderators');
-Route::get('/users/blocked',[UserController::class,'blocked'])->name('users.blocked');
+Route::get('users/moderators',[UserController::class,'moderators'])->name('users.index.moderators');
+Route::get('/users/blocked',[UserController::class,'blockedUsers'])->name('users.index.blocked');
 Route::get('/users/{user}',[UserController::class,'show'])->name('users.show');
 Route::get('/users/edit/{user}',[UserController::class,'edit'])->name('users.edit');
 Route::patch('/users/edit/{user}',[UserController::class,'update'])->name('users.update');

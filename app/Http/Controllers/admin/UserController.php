@@ -46,7 +46,7 @@ class UserController extends Controller
     }
 
 
-    public function blocked(Request $request){
+    public function blockedUsers(Request $request){
         $users=User::where('is_block',true)
         ->when($request->has('search'),function($query)use($request){
             $query->where(function($query)use($request){

@@ -22,7 +22,7 @@ use App\Http\Controllers\auth\ResetPasswordController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('homepage');
 // ------ auth route -------
 Route::get('/register',[RegisterController::class,'showRegistrationForm'])->name('register');
 Route::post('/register',[RegisterController::class,'register']);
