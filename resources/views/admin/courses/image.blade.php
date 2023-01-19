@@ -1,0 +1,1 @@
+<img class="img-fluid" id="course_image" src="{{ route('image.get',['w'=>600,'h'=>400,'image'=>$url]) }}" alt="course image">

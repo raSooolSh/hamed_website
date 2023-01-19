@@ -6,13 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "alexusmai/laravel-file-manager": "2.5.4",
+        "cviebrock/eloquent-sluggable": "8.*",
         "fruitcake/laravel-cors": "^2.0",
-        "ghasedak/php": "dev-master",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "ghasedak/laravel": "*",
+        "guzzlehttp/guzzle": "^7.5",
+        "intervention/image": "^2.7",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "*",
+        "league/flysystem-aws-s3-v3": "*",
+        "morilog/jalali": "^3.4",
         "uxweb/sweet-alert": "^2.0"
     },
     "require-dev": {

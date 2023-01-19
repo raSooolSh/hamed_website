@@ -7,6 +7,6 @@ if(! function_exists('bsIsActive')){
         if(is_array($key)){
             return in_array(Route::currentRouteName(),$key) ? $class : '';
         }
-        return Route::currentRouteName() == $key ? $class : '';
+        return Route::currentRouteName() == $key ? $class : null;
     }
 }

@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $user=User::create([
             'first_name' => 'رسول',
             'last_name' => 'شبانی',
             'type' => 'admin',

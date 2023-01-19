@@ -21,6 +21,8 @@
     },
     "dependencies": {
         "bootstrap": "^5.2.0",
+        "bootstrap-select": "^1.13.18",
+        "ckeditor4": "^4.19.1",
         "jquery": "^3.6.0"
     }
 }

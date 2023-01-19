@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $guarded = [];
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -29,10 +30,50 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function premissions(){
+        return $this->belongsToMany(Premission::class);
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function episodes(){
+        return $this->belongsToMany(Episode::class)->withPivot('request');
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function tickets(){
+        return $this->hasMany(Ticket::class,'phone_number','phone_number');
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+
     public function hasAccessToAdminPanel(){
-        if($this->type=='admin' || $this->type=='moderator'){
+        if($this->type=='admin' || $this->type=='manager'){
             return true;
         }
         return false;
+    }
+
+    public function hasRole($roles)
+    {
+        return !! $roles->intersect($this->roles)->all();
+    }
+
+    public function hasPremission($premission){
+        return $this->premissions->contains('name',$premission->name) || $this->hasRole($premission->roles);
     }
 }

@@ -38,7 +38,26 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => '/storage',
+            'visibility' => 'public',
+        ],
+
+        'vip' => [
+            'driver' => 'local',
+            'root' => storage_path('app/vip'),
+            'url' => '',
+            'visibility' => 'public',
+        ],
+
+        'arvan' => [
+            'driver' => 's3',
+            'key' => env('ARVAN_ACCESS_KEY_ID'),
+            'secret' => env('ARVAN_SECRET_ACCESS_KEY'),
+            'region' => env('ARVAN_DEFAULT_REGION'),
+            'bucket' => env('ARVAN_BUCKET'),
+            'url' => env('ARVAN_URL'),
+            'endpoint' => env('ARVAN_ENDPOINT'),
+            'use_path_style_endpoint' => env('ARVAN_USE_PATH_STYLE_ENDPOINT', false),
             'visibility' => 'public',
         ],
 

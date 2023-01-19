@@ -45,3 +45,11 @@ $(document).on("click", "#search_form button[type='submit']", function (e) {
     });
     return false;
 });
+
+window.addEventListener('popstate',function(){
+    $("#pagination_data").html(`<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>`);
+    $.get(window.location.href, function (data) {
+        $("#pagination_data").html(data);
+    });
+    return false;
+});

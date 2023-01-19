@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\User;
+use App\Models\Premission;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +29,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function(User $user){
+            if($user->type=='admin'){
+                return true;
+            }
+        });
+        
+        if(Schema::hasTable('premissions')){
+            foreach(Premission::all() as $premission){
+                Gate::define($premission->name,function(User $user)use($premission){
+                    return $user->hasPremission($premission);
+                });
+            }
+        }
+        
     }
 }

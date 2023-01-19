@@ -1,4 +1,4 @@
-<div class="toast-container ms-3 mb-3 position-fixed start-0 bottom-0">
+<div class="toast-container ms-3 mb-3 position-fixed start-0 bottom-0" style="z-index: 12000;">
     @foreach (session('toast') as $type => $message)
         @switch($type)
             @case('success')
@@ -40,15 +40,13 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-        var toastList = toastElList.map(function (toastEl) {
-            return new bootstrap.Toast(toastEl, {
-                'delay': 5000,
-            })
+        document.querySelectorAll('.toast').forEach(function(item){
+            // console.log(item.classList.remove('m-2'))
+            item.classList.add('show');
+            setTimeout(() => {
+                item.classList.remove('show')
+            }, 5000);
         })
-        toastList.forEach(function (toast) {
-            toast.show();
-        });
     })
 
 </script>

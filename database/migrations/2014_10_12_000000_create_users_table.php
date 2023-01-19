@@ -17,11 +17,11 @@ class CreateUsersTable extends Migration
             $table->id()->startingValue(1000);
             $table->string('first_name');
             $table->string('last_name');
-            $table->enum('type',['user','admin','moderator'])->default('user');
+            $table->enum('type',['user','admin','manager'])->default('user');
             $table->string('phone_number')->unique();
             $table->string('meli_code')->unique();
             $table->string('password');
-            $table->string('avatar')->default('images/users/default.jpg');
+            $table->string('avatar')->default('/storage/users/default.jpg');
             $table->boolean('is_block')->default(0);
             $table->text('block_reason')->nullable();
             $table->rememberToken();

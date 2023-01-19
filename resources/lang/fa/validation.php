@@ -194,6 +194,19 @@ return [
         'link' => 'لینک',
         'phone_number'=>'شماره تماس',
         'meli_code'=>'کد ملی',
-        'verify_code'=>'کد تاییدیه'
+        'verify_code'=>'کد تاییدیه',
+        'block_reason'=>'دلیل بلاک شدن',
+        'premissions' => 'دسترسی ها',
+        'roles' => 'نقش ها',
+        'teacher'=>'مدرس',
+        'section'=>'بخش ها',
+        'section.*'=>'بخش ',
+        'video' =>'ویدیو',
+        'keywords' => 'کلمات کلیدی',
+        'discount_expire_at'=>'تاریخ اتمام تخفیف',
+        'discount_off'=>'مقدار تخفیف',
+        'users'=>'کاربران',
+        'courses'=>'دوره ها',
+        'content'=>'محتوا'
     ],
 ];

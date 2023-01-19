@@ -3,7 +3,7 @@
 @section('title', 'کاربران')
 @section('content')
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center justify-content-between mb-4">
         <h1 class="h4 mb-0 text-gray-800"> کاربران </h1>
     </div>
     {{-- /page heading --}}
@@ -20,7 +20,7 @@
                     </button>
                 </div>
                 <input type="text" class="form-control bg-white border-0 small" name='search'
-                    value="{{ request()->get('search') }}" placeholder="آیدی، شماره همراه یا کد ملی" aria-label="Search"
+                    value="{{ request()->get('search') }}" placeholder="آیدی، نام، شماره همراه یا کد ملی" aria-label="Search"
                     aria-describedby="basic-addon2">
             </div>
         </form>
@@ -28,8 +28,8 @@
     {{-- /search box --}}
 
     {{-- users table --}}
-    <div id='pagination_data'>
-            @include('admin.users.user-paginate', ['users' => $users])
+    <div id="pagination_data" class="table-responsive">
+        @include('admin.users.users-paginate', ['users' => $users])
     </div>
 
     {{-- userModal --}}
@@ -93,17 +93,19 @@
             }
         });
 
-        $(document).on('click', 'a[data-target="#user_modal"]', function(e) {
-            let url = "{{ route('admin.users.show', ['user' => ':user']) }}";
-            url = url.replace(':user', $(e.currentTarget).attr('data-id'));
-            $.ajax({
-                type: "get",
-                url: url,
-                success: function(response) {
-                    $('.lds-ellipsis').hide();
-                    $('#user_modal .modal-content').html(response);
-                }
+        $(document).ready(function() {
+            $(document).on('click', 'a[data-target="#user_modal"]', function(e) {
+                let url = "{{ route('admin.users.show', ['user' => ':user']) }}";
+                url = url.replace(':user', $(e.currentTarget).attr('data-id'));
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    success: function(response) {
+                        $('.lds-ellipsis').hide();
+                        $('#user_modal .modal-content').html(response);
+                    }
+                });
             });
-        })
+        });
     </script>
 @endsection

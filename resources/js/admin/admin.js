@@ -3,6 +3,8 @@ require('../../vendor/bootstrap/dist/js/bootstrap.bundle');
 require('../../vendor/jquery-easing/jquery.easing');
 require('../../vendor/chart.js/Chart.bundle');
 require("sweetalert");
+require('bootstrap-select');
+require('bootstrap-select/js/i18n/defaults-fa_IR');
 require('./pagination');
 
 (function($) {
@@ -59,6 +61,11 @@ require('./pagination');
       }, 1000, 'easeInOutExpo');
       e.preventDefault();
     });
+
+    $(document).on('change','.custom-file-input',function(){
+      let value=$(this).val()
+     $(this).next('.custom-file-label').text(value.substr(value.lastIndexOf('\\')+1))
+    })
   
   })(jQuery); // End of use strict
   

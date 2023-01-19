@@ -26,6 +26,7 @@ $yellow: #f6c23e !default;
 $green: #1cc88a !default;
 $teal: #20c9a6 !default;
 $cyan: #36b9cc !default;
+$gold: #fab915 !default;
 
 // Custom Colors
 $brand-google: #ea4335 !default;
@@ -79,6 +80,6 @@ $dropdown-border-color: $border-color !default;
 $breadcrumb-divider: '>';
 
 // Images
-$login-image: '../../images/admin/bg-login.jpg' !default;
-$register-image: '../../images/admin/bg-register.jpg' !default;
-$password-image: '../../images/admin/bg-forgot-password.jpg' !default;
+$login-image: '../../dist/images/admin/bg-login.jpg' !default;
+$register-image: '../../dist/images/admin/bg-register.jpg' !default;
+$password-image: '../../dist/images/admin/bg-forgot-password.jpg' !default;

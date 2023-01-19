@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-
+@section('title','داشبورد')
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">

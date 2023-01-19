@@ -189,8 +189,8 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-                <span class="ml-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->first_name.' '.Auth::user()->last_name}}</span>
-                <img class="img-profile rounded-circle" src="{{url(Auth::user()->avatar)}}">
+                <span class="ml-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->full_name}}</span>
+                <img class="img-profile rounded-circle" src="{{route('image.get',['w'=>200,'h'=>200,'image'=>Auth::user()->avatar])}}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in text-right"

@@ -51,7 +51,7 @@
                         <input type="hidden" name="page" value="{{ $paginator->lastPage() }}">
                         <button type="submit" class="page-link position-relative" rel="next"
                             aria-label="@lang('pagination.next')">&rsaquo;&rsaquo;
-                            <span class="badge badge-success position-absolute rounded-circle" style="bottom:-5px;">{{ $paginator->lastPage() }}</span>
+                            <span class="badge bg-primary position-absolute rounded-circle" style="bottom:-5px;">{{ $paginator->lastPage() }}</span>
                         </button>
                             
 

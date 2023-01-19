@@ -3,6 +3,7 @@
 namespace App\Notifications\channels;
 
 
+use Ghasedak\Laravel\GhasedakFacade;
 use Illuminate\Notifications\Notification;
 
 class QasedakVerifySms
@@ -10,12 +11,11 @@ class QasedakVerifySms
     public function send($notifiable, Notification $notification)
     {
         try {
-            $template = "cryptologiVerify";
+            $template = env('GHASEDAK_TEMPLATE_PHONEVERIFY');
             $param1=$notifiable->code;
             $receptor = $notifiable->phone_number;
-            $type=1;
-            $api = new \Ghasedak\GhasedakApi(config('services.qasedak.key'));
-            $api->Verify($receptor,$type,$template,$param1);
+            $type=GhasedakFacade::VERIFY_MESSAGE_TEXT;
+            $response = GhasedakFacade::setVerifyType($type)->Verify($receptor,$template,$param1);
         } catch (\Ghasedak\Exceptions\ApiException $e) {
             throw $e;
         } catch (\Ghasedak\Exceptions\HttpException $e) {
