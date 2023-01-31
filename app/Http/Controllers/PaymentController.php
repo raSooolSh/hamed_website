@@ -118,7 +118,7 @@ class PaymentController extends Controller
         //   ]
         // ]
 
-        error_log($result->throw())
+        error_log($result->throw());
         } else {
             $result = $result['data'];
             if (!is_null($transaction->discount_code)) {
