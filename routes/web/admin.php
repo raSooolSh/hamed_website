@@ -7,6 +7,7 @@ admin panel routes
 */
 
 use App\Models\Coin;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\UserController;
@@ -175,6 +176,6 @@ Route::get('load-charts',function(){
         $coin->chart = $svg;
         $coin->save();
 
-        return redirect()->back();
     }
+    return redirect()->back();
 });
