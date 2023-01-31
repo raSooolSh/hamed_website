@@ -46,17 +46,16 @@ class PaymentController extends Controller
             }
         };
 
-        // $payment_price
         $data = array(
             'merchant_id' => env('GATEWAY_API'),
-            'amount' => 10000,
+            'amount' => $payment_price,
             'callback_url' => route('payment_verify', ['course' => $course->slug]),
             'description' => 'خرید دوره آموزشی ' . $course->name_fa
         );
 
 
         $result = Http::withUserAgent('ZarinPal Rest Api v1')->contentType('application/json')->asJson()->post('https://api.zarinpal.com/pg/v4/payment/request.json', $data);
-        dd($result->json());
+
         if ($result->failed()) {
             $msg = 'در برقراری ارتباط با درگاه پرداخت خطایی رخ داده لطفا دوباره تلاش کنید.';
             return redirect()->back()->with('toast', ['error' =>  $msg]);
@@ -101,31 +100,30 @@ class PaymentController extends Controller
         $data = [
             'merchant_id' => $MerchantID,
             'authority' => $Authority,
-            'amount' => 10000
+            'amount' => $transaction->payment_price
         ];
-        // $transaction->payment_price
 
         $result = Http::withUserAgent('ZarinPal Rest Api v1')->contentType('application/json')->asJson()->post('https://api.zarinpal.com/pg/v4/payment/verify.json', $data)->json();
 
         if ($result->failed()) {
 
-        //             [▼
-        //   "data" => []
-        //   "errors" => array:3 [▶
-        //     "code" => -53
-        //     "message" => "Session is not this merchant_id session."
-        //     "validations" => []
-        //   ]
-        // ]
+            //             [▼
+            //   "data" => []
+            //   "errors" => array:3 [▶
+            //     "code" => -53
+            //     "message" => "Session is not this merchant_id session."
+            //     "validations" => []
+            //   ]
+            // ]
 
-        error_log($result->throw());
+            error_log($result->throw());
         } else {
             $result = $result['data'];
             if (!is_null($transaction->discount_code)) {
                 $discount = Discount::where('code', $transaction->discount_code)->first();
             }
 
-            if ($result['code'] == 100 || $result['code'] ==101) {
+            if ($result['code'] == 100 || $result['code'] == 101) {
                 $transaction->update([
                     'status' => 1,
                     'payment_status' => $result['code']
