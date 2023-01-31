@@ -6,18 +6,19 @@ admin panel routes
 ---------------------------------------------------
 */
 
+use App\Models\Coin;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\RoleController;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\CourseController;
+use App\Http\Controllers\admin\TicketController;
 use App\Http\Controllers\admin\ArticleController;
 use App\Http\Controllers\admin\CommentController;
-use App\Http\Controllers\admin\CourseController;
-use App\Http\Controllers\admin\DiscountController;
 use App\Http\Controllers\admin\EpisodeController;
+use App\Http\Controllers\admin\DiscountController;
 use App\Http\Controllers\admin\PremissionController;
-use App\Http\Controllers\admin\RoleController;
-use App\Http\Controllers\admin\TicketController;
-use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\UserDownloadController;
 use App\Http\Controllers\admin\UserPremissionController;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
@@ -155,3 +156,25 @@ Route::middleware('can:tickets-manage')->group(function(){
 });
 
 // -----/tickets Routes
+
+Route::get('load-charts',function(){
+    $coins = Coin::ALL();
+    foreach ($coins as $coin) {
+        $url = 'https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/' . $coin->cmc_id . '.svg';
+        $chart = Http::get($url)->body();
+        preg_match('/(?=<svg)[\s\S]*/', $chart, $svg);
+        $svg = $svg[0];
+        $svg = preg_replace('/width="164px"/', 'width="185px"', $svg);
+        $svg = preg_replace('/height="48px"/', 'height="80px"', $svg);
+        if ($coin->change_last_week >= 0) {
+            $svg = preg_replace('/stroke:rgb\(237,194,64\)/', 'stroke:rgb(0,200,0)', $svg);
+        } else {
+            $svg = preg_replace('/stroke:rgb\(237,194,64\)/', 'stroke:rgb(200,0,0)', $svg);
+        }
+
+        $coin->chart = $svg;
+        $coin->save();
+
+        return redirect()->back();
+    }
+});

@@ -46,38 +46,23 @@ class PaymentController extends Controller
             }
         };
 
-
+        // $payment_price
         $data = array(
-            'MerchantID' => env('GATEWAY_API'),
-            'Amount' => $payment_price,
-            'CallbackURL' => route('payment_verify', ['course' => $course->slug]),
-            'Description' => 'خرید دوره آموزشی ' . $course->name_fa
+            'merchant_id' => env('GATEWAY_API'),
+            'amount' => 10000,
+            'callback_url' => route('payment_verify', ['course' => $course->slug]),
+            'description' => 'خرید دوره آموزشی ' . $course->name_fa
         );
 
 
-        $jsonData = json_encode($data);
-        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($jsonData)
-        ));
-
-
-        $result = curl_exec($ch);
-        $err = curl_error($ch);
-        $result = json_decode($result, true);
-        curl_close($ch);
-
-
-        if ($err) {
-            $msg = 'خطا :' . $err;
+        $result = Http::withUserAgent('ZarinPal Rest Api v1')->contentType('application/json')->asJson()->post('https://api.zarinpal.com/pg/v4/payment/request.json', $data);
+        dd($result->json());
+        if ($result->failed()) {
+            $msg = 'در برقراری ارتباط با درگاه پرداخت خطایی رخ داده لطفا دوباره تلاش کنید.';
             return redirect()->back()->with('toast', ['error' =>  $msg]);
         } else {
-            if ($result["Status"] == 100) {
+            $result = $result->json()['data'];
+            if ($result["code"] == 100) {
 
                 Transaction::create([
                     'user_id' => auth()->user()->id,
@@ -85,20 +70,26 @@ class PaymentController extends Controller
                     'course_price' => $course->price,
                     'payment_price' => $payment_price,
                     'discount_code' => $request->discount,
-                    'token' => $result["Authority"],
+                    'token' => $result["authority"],
                     'description' => null,
                     'gateway_name' => env('GATEWAY_NAME')
                 ]);
 
 
-                return redirect()->to('https://sandbox.zarinpal.com/pg/StartPay/' . $result["Authority"]);
+                return redirect()->to('https://www.zarinpal.com/pg/StartPay/' . $result["authority"]);
             } else {
                 echo 'ERR: ' . $result["Status"];
             }
         }
     }
 
-    public function verify(Course $course,Request $request)
+
+
+
+
+    // verify payment -------------------------------------------------
+
+    public function verify(Course $course, Request $request)
     {
         $MerchantID = env('GATEWAY_API');
 
@@ -108,56 +99,49 @@ class PaymentController extends Controller
         $transaction = Transaction::where('token', $request->Authority)->first();
 
         $data = [
-            'MerchantID' => $MerchantID,
-            'Authority' => $Authority,
-            'Amount' => $transaction->payment_price
+            'merchant_id' => $MerchantID,
+            'authority' => $Authority,
+            'amount' => 10000
         ];
+        // $transaction->payment_price
 
-        $jsonData = json_encode($data);
+        $result = Http::withUserAgent('ZarinPal Rest Api v1')->contentType('application/json')->asJson()->post('https://api.zarinpal.com/pg/v4/payment/verify.json', $data)->json();
 
+        if ($result->failed()) {
 
-        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json');
-        curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($jsonData)
-        ));
+        //             [▼
+        //   "data" => []
+        //   "errors" => array:3 [▶
+        //     "code" => -53
+        //     "message" => "Session is not this merchant_id session."
+        //     "validations" => []
+        //   ]
+        // ]
 
-
-        $result = curl_exec($ch);
-        $err = curl_error($ch);
-        curl_close($ch);
-
-        $result = json_decode($result, true);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
+        error_log($result->throw())
         } else {
-            if(! is_null($transaction->discount_code)){
-                $discount = Discount::where('code',$transaction->discount_code)->first();
+            $result = $result['data'];
+            if (!is_null($transaction->discount_code)) {
+                $discount = Discount::where('code', $transaction->discount_code)->first();
             }
 
-            if ($result['Status'] == 100) {
+            if ($result['code'] == 100 || $result['code'] ==101) {
                 $transaction->update([
-                    'status' => 1 ,
-                    'payment_status' => $result['Status']
-                ]);
-                
-                Auth()->user()->courses()->syncWithPivotValues($transaction->course_id,[
-                    'course_price'=>$transaction->course_price,
-                    'payment_price'=>$transaction->payment_price,
-                    'discount_code'=>isset($discount) ? $discount->code : null,
-                    'discount_type'=>isset($discount) ? $discount->type : null,
-                    'discount_off'=>isset($discount) ? $discount->value : null
+                    'status' => 1,
+                    'payment_status' => $result['code']
                 ]);
 
-                echo 'Transation success. RefID:' . $result['RefID'];
+                Auth()->user()->courses()->syncWithPivotValues($transaction->course_id, [
+                    'course_price' => $transaction->course_price,
+                    'payment_price' => $transaction->payment_price,
+                    'discount_code' => isset($discount) ? $discount->code : null,
+                    'discount_type' => isset($discount) ? $discount->type : null,
+                    'discount_off' => isset($discount) ? $discount->value : null
+                ]);
+
+                echo 'Transation success. RefID:' . $result['ref_id'];
             } else {
-                echo 'Transation failed. Status:' . $result['Status'];
+                echo 'Transation failed. Status:' . $result['code'];
             }
         }
     }
